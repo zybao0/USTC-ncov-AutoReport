@@ -1,4 +1,4 @@
-# 中国滑稽大学(University of Ridiculous of China)健康打卡平台自动打卡脚本
+# [2021.10更新]中国滑稽大学(University of Ridiculous of China)健康打卡平台自动打卡脚本
 
 ![Auto-report action](https://github.com/Violin9906/USTC-ncov-AutoReport/workflows/Auto-report%20action/badge.svg?branch=master&event=schedule)
 ![School](https://img.shields.io/badge/School-URC-blue.svg)
@@ -15,6 +15,7 @@
 - 20200831：增强稳定性
 - 20200827：增加打卡失败重试功能，增加License
 - 20200826：为配合学校最新规定，切换至Github Actions实现一天三次打卡
+- 20211016：增加统一身份认证自动输入验证码功能；更新了data.json；修复了一些bug；新增了一些bug
 
 ## 使用方法
 
