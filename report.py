@@ -191,7 +191,7 @@ if __name__ == "__main__":
     parser.add_argument('password', help='your CAS password', type=str)
     args = parser.parse_args()
     autorepoter = Report(stuid=args.stuid, password=args.password, data_path=args.data_path)
-    count = 1
+    count = 5
     while count != 0:
         ret = autorepoter.report()
         if ret != False:
