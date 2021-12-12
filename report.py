@@ -15,7 +15,7 @@ import numpy
 
 
 
-#识别二维码
+#识别验证码
 def recognize_text(img):
     gray_img = cv.cvtColor(img, cv.COLOR_RGB2GRAY) #灰度图
     height, width = gray_img.shape #获取图片宽高
@@ -110,7 +110,42 @@ class Report(object):
         if flag == False:
             print("Report FAILED!")
         else:
+            flag = False
             print("Report SUCCESSFUL!")
+
+            # 离校报备
+            getform = session.get("https://weixine.ustc.edu.cn/2020/apply/daliy")
+            data = getform.text
+            data = data.encode('ascii','ignore').decode('utf-8','ignore')
+            soup = BeautifulSoup(data, 'html.parser')
+            token = soup.find("input", {"name": "_token"})['value']
+            start_date = soup.find("input", {"id": "start_date"})['value']
+            end_date = soup.find("input", {"id": "end_date"})['value']
+
+            url = "https://weixine.ustc.edu.cn/2020/apply/daliy/post"
+            data2={}
+            data2["_token"]=token
+            data2["start_date"]=start_date
+            data2["end_date"]=end_date
+
+            post_data=session.post(url, data=data2, headers=headers)
+            data = session.get("https://weixine.ustc.edu.cn/2020/apply_total?t=d").text
+
+            soup = BeautifulSoup(data, 'html.parser')
+            date = soup.find(text=pattern)
+            if data:
+                print("Latest apply: " + date)
+                date = date + " +0800"
+                reporttime = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S %z")
+                timenow = datetime.datetime.now(pytz.timezone('Asia/Shanghai'))
+                delta = timenow - reporttime
+                print("{} second(s) before.".format(delta.seconds))
+                if delta.seconds < 120:
+                    flag = True
+                if flag == False:
+                    print("Apply FAILED!")
+                else:
+                    print("Apply SUCCESSFUL!")
         return flag
 
     def login(self):
@@ -156,7 +191,7 @@ if __name__ == "__main__":
     parser.add_argument('password', help='your CAS password', type=str)
     args = parser.parse_args()
     autorepoter = Report(stuid=args.stuid, password=args.password, data_path=args.data_path)
-    count = 5
+    count = 1
     while count != 0:
         ret = autorepoter.report()
         if ret != False:
