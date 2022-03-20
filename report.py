@@ -83,7 +83,6 @@ class Report(object):
             'referer': 'https://weixine.ustc.edu.cn/2020/',
             'accept-language': 'zh-CN,zh;q=0.9',
             'Connection': 'keep-alive',
-            'cookie': 'PHPSESSID=' + cookies.get("PHPSESSID") + ";XSRF-TOKEN=" + cookies.get("XSRF-TOKEN") + ";laravel_session="+cookies.get("laravel_session"),
         }
 
         url = "https://weixine.ustc.edu.cn/2020/daliy_report"
@@ -114,7 +113,7 @@ class Report(object):
             print("Report SUCCESSFUL!")
 
             # 离校报备
-            getform = session.get("https://weixine.ustc.edu.cn/2020/apply/daliy")
+            getform = session.get("https://weixine.ustc.edu.cn/2020/apply/daliy/i?t=23")
             data = getform.text
             data = data.encode('ascii','ignore').decode('utf-8','ignore')
             soup = BeautifulSoup(data, 'html.parser')
@@ -127,6 +126,8 @@ class Report(object):
             data2["_token"]=token
             data2["start_date"]=start_date
             data2["end_date"]=end_date
+            data2["return_college[]"]=["东校区","西校区","中校区"]
+            data2["t"]="23"
 
             post_data=session.post(url, data=data2, headers=headers)
             data = session.get("https://weixine.ustc.edu.cn/2020/apply_total?t=d").text
@@ -164,6 +165,7 @@ class Report(object):
         res_get = session.get(url)
 
         html_data = res_get.text
+        #print(html_data)
         html_data = html_data.encode('ascii','ignore').decode('utf-8','ignore')
         soup = BeautifulSoup(html_data, 'html.parser')
         CAS_LT = soup.find("input", {"name": "CAS_LT"})['value']#我也不知道这个东西有什么用
