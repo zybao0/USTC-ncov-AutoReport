@@ -7,7 +7,7 @@ on:
     branches:
       - master
   schedule:
-    - cron: '30 3,12 * * *'
+    - cron: '30 3,19,21 * * *'
 
 jobs:
   build:
@@ -31,5 +31,6 @@ jobs:
       env:
         STUID: ${{ secrets.Stuid }}
         PASSWORD: ${{ secrets.Password }}
+        DORM: ${{ secrets.Dorm }}
       run: |
-        python report.py data.json "$STUID" "$PASSWORD"
+        python report.py data.json "$STUID" "$PASSWORD" "$DORM"

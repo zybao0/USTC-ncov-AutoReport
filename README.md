@@ -30,7 +30,7 @@
 
 4. 点击Actions选项卡，点击`I understand my workflows, go ahead and enable them`.
 
-5. 点击Settings选项卡，点击左侧Secrets，点击New secret，创建名为`STUID`，值为自己学号的secret。用同样方法，创建名为`PASSWORD`，值为自己中国滑稽大学统一身份认证密码的secret。这两个值不会被公开。
+5. 点击Settings选项卡，点击左侧Secrets，点击New secret，创建名为`STUID`，值为自己学号的secret。用同样方法，创建名为`PASSWORD`，值为自己中国滑稽大学统一身份认证密码的secret，创建名为`DORM`，值为自己中国滑稽大学宿舍号。这些值不会被公开。
 
    ![secrets](imgs/image-20200826215037042.png)
 

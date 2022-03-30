@@ -42,10 +42,11 @@ def recognize_text(img):
     return text
 
 class Report(object):
-    def __init__(self, stuid, password, data_path):
+    def __init__(self, stuid, password, data_path, dorm):
         self.stuid = stuid
         self.password = password
         self.data_path = data_path
+        self.dorm = dorm
 
     def report(self):
         loginsuccess = False
@@ -71,6 +72,7 @@ class Report(object):
             data = f.read()
             data = json.loads(data)
             data["_token"]=token
+            data["dorm"]=self.dorm
 
 
         headers = {
@@ -191,8 +193,9 @@ if __name__ == "__main__":
     parser.add_argument('data_path', help='path to your own data used for post method', type=str)
     parser.add_argument('stuid', help='your student number', type=str)
     parser.add_argument('password', help='your CAS password', type=str)
+    parser.add_argument('dorm', help='your dorm', type=str)
     args = parser.parse_args()
-    autorepoter = Report(stuid=args.stuid, password=args.password, data_path=args.data_path)
+    autorepoter = Report(stuid=args.stuid, password=args.password, data_path=args.data_path,dorm=args.dorm)
     count = 5
     while count != 0:
         ret = autorepoter.report()
